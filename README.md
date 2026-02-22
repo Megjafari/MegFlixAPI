@@ -24,7 +24,7 @@ dotnet ef database update
 dotnet run
 ```
 
-Swagger UI: `https://localhost:7000/swagger`
+Swagger UI: `https://localhost:7056/swagger`
 
 ## Endpoints
 
