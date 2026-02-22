@@ -8,6 +8,10 @@ ASP.NET Core Web API skoluppgift – ett film- och recensionsbibliotek.
 - DTOs + Services + Dependency Injection
 - Swagger UI
 
+## Frontend
+Frontend till detta API finns här:
+[MovieLibraryFrontend](https://github.com/Megjafari/MovieLibraryFrontend)
+
 ## Kom igång
 
 ### Krav
