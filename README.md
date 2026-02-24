@@ -1,24 +1,24 @@
 # 🎬 MovieLibraryApi
 
-ASP.NET Core Web API skoluppgift – ett film- och recensionsbibliotek.
+ASP.NET Core Web API for managing movies and reviews.
 
-## Tekniker
+## Tech Stack
 - ASP.NET Core Web API
 - Entity Framework Core + SQL Server
 - DTOs + Services + Dependency Injection
 - Swagger UI
 
 ## Frontend
-Frontend till detta API finns här:
+Frontend for this API can be found here:
 [MovieLibraryFrontend](https://github.com/Megjafari/MovieLibraryFrontend)
 
-## Kom igång
+## Getting Started
 
-### Krav
+### Requirements
 - .NET 8 SDK
 - SQL Server
 
-### Starta projektet
+### Start the project
 ```bash
 dotnet ef database update
 dotnet run
@@ -29,31 +29,30 @@ Swagger UI: `https://localhost:7056/swagger`
 ## Endpoints
 
 ### Movies
-| Method | Endpoint | Beskrivning |
+| Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | /api/Movies | Hämta alla filmer |
-| GET | /api/Movies/{id} | Hämta en film |
-| POST | /api/Movies | Skapa film |
-| PUT | /api/Movies/{id} | Uppdatera film |
-| DELETE | /api/Movies/{id} | Ta bort film |
+| GET | /api/Movies | Get all movies |
+| GET | /api/Movies/{id} | Get a movie |
+| POST | /api/Movies | Create a movie |
+| PUT | /api/Movies/{id} | Update a movie |
+| DELETE | /api/Movies/{id} | Delete a movie |
 
 ### Reviews
-| Method | Endpoint | Beskrivning |
+| Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | /api/Reviews | Hämta alla recensioner |
-| GET | /api/Reviews/{id} | Hämta en recension |
-| POST | /api/Reviews | Skapa recension |
-| PUT | /api/Reviews/{id} | Uppdatera recension |
-| DELETE | /api/Reviews/{id} | Ta bort recension |
+| GET | /api/Reviews | Get all reviews |
+| GET | /api/Reviews/{id} | Get a review |
+| POST | /api/Reviews | Create a review |
+| PUT | /api/Reviews/{id} | Update a review |
+| DELETE | /api/Reviews/{id} | Delete a review |
 
-## Datamodell
+## Data Model
 
 **Movie**
 - Id, Title, Description, ReleaseDate
 
 **Review**
 - Id, Comment, Rating (1-5), MovieId
-
 
 ## Screenshots
 
