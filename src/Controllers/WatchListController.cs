@@ -21,8 +21,11 @@ public class WatchListController : ControllerBase
     [HttpGet]
     public IActionResult GetMyList()
     {
-        var userId = int.Parse(User.FindFirstValue("nameid") ?? User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                  ?? User.FindFirstValue("sub");
+
+        if (userId is null) return Unauthorized();
+
         var movies = _context.WatchLists
             .Where(w => w.UserId == userId)
             .Select(w => w.Movie)
@@ -34,23 +37,29 @@ public class WatchListController : ControllerBase
     [HttpPost("{movieId}")]
     public async Task<IActionResult> AddToList(int movieId)
     {
-        var userId = int.Parse(User.FindFirstValue("nameid") ?? User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                  ?? User.FindFirstValue("sub");
+
+        if (userId is null) return Unauthorized();
 
         var exists = _context.WatchLists.Any(w => w.UserId == userId && w.MovieId == movieId);
         if (exists)
-            return BadRequest("Movie already in list");
+            return BadRequest(new { message = "Movie already in list" });
 
         var watchList = new WatchList { UserId = userId, MovieId = movieId };
         _context.WatchLists.Add(watchList);
         await _context.SaveChangesAsync();
 
-        return Ok("Added to list");
+        return Ok(new { message = "Added to list" });
     }
 
     [HttpDelete("{movieId}")]
     public async Task<IActionResult> RemoveFromList(int movieId)
     {
-        var userId = int.Parse(User.FindFirstValue("nameid") ?? User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                  ?? User.FindFirstValue("sub");
+
+        if (userId is null) return Unauthorized();
 
         var item = _context.WatchLists.FirstOrDefault(w => w.UserId == userId && w.MovieId == movieId);
         if (item == null)
@@ -59,6 +68,6 @@ public class WatchListController : ControllerBase
         _context.WatchLists.Remove(item);
         await _context.SaveChangesAsync();
 
-        return Ok("Removed from list");
+        return Ok(new { message = "Removed from list" });
     }
 }

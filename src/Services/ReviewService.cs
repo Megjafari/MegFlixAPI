@@ -13,15 +13,15 @@ public class ReviewService : IReviewService
         _db = db;
     }
 
-    public async Task<List<Review>> GetAllAsync(int? movieId, int? userId = null)
+    public async Task<List<Review>> GetAllAsync(int? movieId, string? userId = null)
     {
         var query = _db.Reviews.AsQueryable();
 
         if (movieId.HasValue)
             query = query.Where(r => r.MovieId == movieId.Value);
 
-        if (userId.HasValue)
-            query = query.Where(r => r.UserId == userId.Value);
+        if (userId is not null)
+            query = query.Where(r => r.UserId == userId);
 
         return await query
             .AsNoTracking()

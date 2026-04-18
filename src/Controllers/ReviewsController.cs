@@ -21,9 +21,10 @@ public class ReviewsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<ReviewResponseDto>>> GetAll([FromQuery] int? movieId)
     {
-        int? userId = null;
+        string? userId = null;
         if (User.Identity?.IsAuthenticated == true)
-            userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            userId = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                  ?? User.FindFirstValue("sub");
 
         var reviews = await _service.GetAllAsync(movieId, userId);
 
@@ -57,7 +58,10 @@ public class ReviewsController : ControllerBase
     [Authorize]
     public async Task<ActionResult<ReviewResponseDto>> Create(ReviewCreateDto dto)
     {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                  ?? User.FindFirstValue("sub");
+
+        if (userId is null) return Unauthorized();
 
         var entity = new Review
         {

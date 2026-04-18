@@ -37,16 +37,12 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.Authority = "https://gflnokxreowwavlurdrz.supabase.co/auth/v1";
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            ValidIssuer = "https://gflnokxreowwavlurdrz.supabase.co/auth/v1",
+            ValidateAudience = false,
         };
     });
 var app = builder.Build();
